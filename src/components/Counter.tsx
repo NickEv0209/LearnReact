@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { UseTheme } from "../context/ThemeContext";
 
 interface Prop {
   initialCount: number;
@@ -6,28 +7,27 @@ interface Prop {
 
 const Counter = ({initialCount}: Prop) => {
   const [count, setCount] = useState(initialCount ?? 0);
+  const { toggleTheme } = UseTheme();
 
   useEffect(() => {
     console.log(`Count has been set to ${count}`);
   }, [count]);
 
-  const handleCountPlus = () => {
-    setCount(count => count + 1);
-  }
-  const handleCountMinus = () => {
-    setCount(count => count - 1);
-  }
-  const handleCountReset = () => {
-    setCount(initialCount);
-  }
-
   return (
     <>
-      <h1>{count}</h1>
-
-      <button onClick={handleCountPlus}>+</button>
-      <button onClick={handleCountMinus}>-</button>
-      <button onClick={handleCountReset}>Reset</button>
+    <h1>{count}</h1>
+    <div style={{
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '10px'
+    }}>
+      <button onClick={toggleTheme}>Toggle Theme</button>
+      <button onClick={() => setCount(count => count + 1)}>+</button>
+      <button onClick={() => setCount(count => count - 1)}>-</button>
+      <button onClick={() => setCount(initialCount)}>Reset</button>
+    </div>
     </>
   )
 }
